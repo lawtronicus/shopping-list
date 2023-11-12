@@ -83,8 +83,9 @@ main {
     height: 2.5rem;
     width: 5rem;
     border-radius: 8px;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.25);
     transition: box-shadow 50ms, transform 50ms;
+    cursor: pointer;
 }
 
 #add-btn {
@@ -93,7 +94,7 @@ main {
 
 .btn:active {
     box-shadow: none;
-    transform: translate(2px, 2px); /* Moves the button to cover the shadow space */
+    transform: translate(1px, 1px); /* Moves the button to cover the shadow space */
 }
 
 .filter {
@@ -102,6 +103,7 @@ main {
     align-items: center;
     border-bottom: 1px solid var(--text-color);
     padding-bottom: 4px;
+    visibility: hidden;
 }
 
 #filter {
@@ -177,6 +179,7 @@ li > p {
     filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
     pointer-events: auto;
     transition: filter 50ms, transform 50ms;
+    cursor: pointer;
 }
 
 #delete-icon:active {

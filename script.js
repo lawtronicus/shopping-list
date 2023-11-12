@@ -2,6 +2,8 @@
 const itemForm = document.querySelector('#item-form');
 const formInput = document.querySelector('#form-input');
 const itemList = document.querySelector('#item-list');
+const clearBtn = document.querySelector('#clear');
+const filter = document.querySelector('.filter');
 
 // Functions
 
@@ -24,6 +26,8 @@ function addItem (e) {
     const button = createButton('delete-button');
     li.appendChild(button);
     itemList.appendChild(li);
+    revealFilter();
+    revealClearBtn();
 
 //clear input for next item
     formInput.value = '';
@@ -57,8 +61,47 @@ function createButtonImage(buttonImageId, source, altText) {
     return image;
 }
 
+//delete items
+
+function deleteItem(e) {
+    if (e.target.parentElement.id === "delete-button") {
+        e.target.parentElement.parentElement.remove()
+    };
+    if (itemList.children.length === 0) {
+        hideFilter();
+        hideClearBtn();
+    };
+};
+
+//clear all items
+
+function clearItems(e) {
+    while (itemList.firstChild) {
+        itemList.removeChild(itemList.firstChild);
+        hideFilter();
+        hideClearBtn();
+    }
+
+};
+
+//reveal clear button
+
+const revealClearBtn = () => clearBtn.style.visibility = "visible";
+
+//hide clear button
+
+const hideClearBtn = () => clearBtn.style.visibility = "hidden";
+
+//reveal filter
+const revealFilter = () => filter.style.visibility = "visible";
+
+// hide filter
+const hideFilter = () => filter.style.visibility = "hidden";
+
 // Event Listeners
 itemForm.addEventListener('submit', addItem);
+itemList.addEventListener('click', deleteItem);
+clearBtn.addEventListener('click', clearItems);
 
 
 
