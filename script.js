@@ -65,8 +65,9 @@ function createButtonImage(buttonImageId, source, altText) {
 
 function deleteItem(e) {
     if (e.target.parentElement.id === "delete-button") {
-        e.target.parentElement.parentElement.remove()
-    };
+        if (confirm('Are you sure?')) {
+            e.target.parentElement.parentElement.remove()
+    }};
     if (itemList.children.length === 0) {
         hideFilter();
         hideClearBtn();
@@ -76,14 +77,15 @@ function deleteItem(e) {
 //clear all items
 
 function clearItems(e) {
-    while (itemList.firstChild) {
-        itemList.removeChild(itemList.firstChild);
-        hideFilter();
-        hideClearBtn();
-    }
+    if (confirm("Are you sure")) {
+        while (itemList.firstChild) {
+            itemList.removeChild(itemList.firstChild);
+            hideFilter();
+            hideClearBtn();
+        }
 
+    };
 };
-
 //reveal clear button
 
 const revealClearBtn = () => clearBtn.style.visibility = "visible";
