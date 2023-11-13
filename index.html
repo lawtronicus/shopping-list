@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping LIst</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>Shopping List</p>
+            <img id="shoppingCart" src="/images/icons/2x/white shopping cart with coral@2x.png" alt="shopping cart icon">
+        </header>
+        <main>
+            <form id="item-form">
+                <div class="form-controls">
+                    <input 
+                        type="text" 
+                        class="form-input"
+                        id="form-input"
+                        name="item"
+                        placeholder="Enter Item"
+                    />                
+                </div>
+                <div class="form-controls">
+                    <button class="btn" type="submit" id="add-btn">
+                        Add
+                    </button>
+                </div>
+            </form>
+            <div class="filter">
+                <input 
+                    type="text" 
+                    class="form-input-filter"
+                    id="filter"
+                    placeholder="Filter Items"
+                />
+                <div id="mag-icon">
+                    <img src="/images/icons/Group 8.png" alt="magnifying glass">
+                </div>
+            </div>
+            <ul id="item-list" class="items">
+            </ul>
+            <button class="btn" id="clear">Clear All</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
