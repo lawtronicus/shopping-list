@@ -154,7 +154,7 @@ li {
     display: flex;
     list-style-type: none;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     font-size: 24px;
     background-color: var(--input-background-color);
     border: none;
@@ -163,24 +163,57 @@ li {
     font-size: 18px;
     border-radius: 8px;
     color: var(--text-color);
+    gap: .75rem;
 }
+
 
 li > p {
     padding-left: 12px;
+    font-weight: 600;
+}
+
+#modify-buttons {
+    display: flex;
+    align-items: center;
+}
+
+#edit-button {
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    border: none;
+    pointer-events: none;
+    margin-left: auto;
+}
+
+#edit-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: auto;
+    transition: filter 50ms, transform 50ms;
+}
+
+#edit-icon:hover {
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+}
+
+#edit-icon:active {
+    filter: none;
+    transform: translate(1px, 1px); /* Moves the button to cover the shadow space */
 }
 
 #delete-button {
     background: transparent;
     display: flex;
     justify-content: center;
-    border: none;
-    padding-right: 4px;
+    border: none; 
+    padding-right: 1rem;
     pointer-events: none;
 }
 
 #delete-icon {
-    width: 50%;
-    height: 50%;
+    width: 1rem;
+    height: 1rem;
     pointer-events: auto;
     transition: filter 50ms, transform 50ms;
     cursor: pointer;

@@ -1,10 +1,12 @@
 // Global Variables
 const itemForm = document.querySelector('#item-form');
+const addBtn = document.querySelector('#add-btn');
 const formInput = document.querySelector('#form-input');
 const itemList = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
 const filter = document.querySelector('.filter');
 const filterInput = document.querySelector('#filter');
+let isEditMode = false;
 
 // Functions
 
@@ -15,6 +17,21 @@ function displayItems () {
 }
 
 function onAddItemSubmit (e) {
+    //Check if edit mode is on
+    if (isEditMode) {
+        const itemToEdit = itemList.querySelector('[editing]');
+        updateLocalStorage(itemToEdit.firstChild.textContent);
+        itemToEdit.removeAttribute('editing');
+        itemToEdit.remove();
+        isEditMode = false
+
+        addBtn.innerHTML = "Add";
+        addBtn.style.color = "white"
+        addBtn.style.backgroundColor = "#58B7B3";
+        addBtn.style.border = "none";
+
+    }
+
     const newItem = formInput.value;
     e.preventDefault();
 
@@ -44,8 +61,10 @@ function addItemToDom (item) {
     /*   li.appendChild(document.createTextNode(newItem)); */
     const itemText = createPElement(item);
     li.appendChild(itemText);
-    const button = createButton('delete-button');
-    li.appendChild(button);
+    const editButton = createButton('edit-button', 'edit-icon', 'images/icons/2x/edit-button@2x.png','edit-icon');
+    const deleteButton = createButton('delete-button', 'delete-icon', '/images/icons/2x/Delete@2x.png', 'delete-icon');
+    li.appendChild(editButton);
+    li.appendChild(deleteButton);
     itemList.appendChild(li);
 }
 
@@ -59,14 +78,13 @@ function createPElement(content) {
 
 // Create delete button for list items
 
-function createButton(elementId) {
+function createButton(elementId, buttonImageId, source, altText) {
     const button = document.createElement('button');
     button.id = elementId;
-    const image = createButtonImage('delete-icon', '/images/icons/Delete.png', 'delete-icon')
+    const image = createButtonImage(buttonImageId, source, altText)
     button.appendChild(image);
     return button;
 }
-
 // Create image for delete button
 
 function createButtonImage(buttonImageId, source, altText) {
@@ -93,11 +111,9 @@ function addItemToLocalStorage(item) {
 
 function updateLocalStorage(item) {
     const itemsFromStorage = getItemsFromStorage();
-    console.log(itemsFromStorage);
 
     //remove item from array
     const itemIndex = itemsFromStorage.indexOf(item);
-    console.log(itemIndex);
     if (itemIndex > -1) {
         itemsFromStorage.splice(itemIndex,1);
     }
@@ -137,7 +153,7 @@ function filterItems (e) {
 
 // delete items
 
-function deleteItem(e) {
+function onClickItem(e) {
     itemText = e.target.parentElement.parentElement.textContent;
     if (e.target.parentElement.id === "delete-button") {
         if (confirm('Are you sure?')) {
@@ -145,8 +161,32 @@ function deleteItem(e) {
             updateLocalStorage(itemText);
             checkUI();
         }
+    } else if (e.target.parentElement.id === "edit-button") {
+        setItemToEdit(e.target.parentElement.parentElement);
     };
 };
+
+// Set item to edit
+function setItemToEdit(item) {
+    
+    isEditMode = true;
+
+    itemList
+    .querySelectorAll('li')
+    .forEach((element) => {
+        element.firstChild.style.color = "#404E5C";
+        element.removeAttribute('editing');
+    });
+
+    item.setAttribute('editing', '');
+
+    item.firstChild.style.color = "#aaa";
+    addBtn.innerHTML = "Edit";
+    addBtn.style.color = "#58B7B3"
+    addBtn.style.backgroundColor = "#eee";
+    addBtn.style.border = "1px solid #58B7B3";
+    formInput.value = item.textContent;
+}
 
 //clear all items
 
@@ -156,7 +196,7 @@ function clearItems(e) {
             itemList.removeChild(itemList.firstChild);
         };
         checkUI()
-        localStorage.clear();
+        localStorage.removeItem('items');
     };
 };
 
@@ -176,7 +216,7 @@ function checkUI () {
 function init() {
     // Event Listeners
     itemForm.addEventListener('submit', onAddItemSubmit);
-    itemList.addEventListener('click', deleteItem);
+    itemList.addEventListener('click', onClickItem);
     clearBtn.addEventListener('click', clearItems);
     filter.addEventListener('input', filterItems);
     document.addEventListener('DOMContentLoaded', displayItems);
