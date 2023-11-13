@@ -4,6 +4,7 @@ const formInput = document.querySelector('#form-input');
 const itemList = document.querySelector('#item-list');
 const clearBtn = document.querySelector('#clear');
 const filter = document.querySelector('.filter');
+const filterInput = document.querySelector('#filter');
 
 // Functions
 
@@ -61,7 +62,22 @@ function createButtonImage(buttonImageId, source, altText) {
     return image;
 }
 
-//delete items
+// filter while user types 
+
+function filterItems (e) {
+    const currentFilter = filterInput.value.toLowerCase();
+    const items = itemList.querySelectorAll('li');
+    items.forEach(item => {
+        const itemName = item.firstChild.textContent.toLowerCase();
+        if (itemName.indexOf(currentFilter) != -1) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    })
+}
+
+// delete items
 
 function deleteItem(e) {
     if (e.target.parentElement.id === "delete-button") {
@@ -83,7 +99,6 @@ function clearItems(e) {
             hideFilter();
             hideClearBtn();
         }
-
     };
 };
 //reveal clear button
@@ -104,6 +119,7 @@ const hideFilter = () => filter.style.visibility = "hidden";
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', deleteItem);
 clearBtn.addEventListener('click', clearItems);
+filter.addEventListener('input', filterItems);
 
 
 
