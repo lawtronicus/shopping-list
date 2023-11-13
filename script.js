@@ -70,7 +70,7 @@ function addItemToDom (item) {
     const itemText = createPElement(item);
     li.appendChild(itemText);
     const editButton = createButton('edit-button', 'edit-icon', 'images/icons/2x/edit-button@2x.png','edit-icon');
-    const deleteButton = createButton('delete-button', 'delete-icon', '/images/icons/2x/Delete@2x.png', 'delete-icon');
+    const deleteButton = createButton('delete-button', 'delete-icon', 'images/icons/2x/Delete@2x.png', 'delete-icon');
     li.appendChild(editButton);
     li.appendChild(deleteButton);
     itemList.appendChild(li);
