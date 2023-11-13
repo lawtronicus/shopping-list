@@ -17,6 +17,9 @@ function displayItems () {
 }
 
 function onAddItemSubmit (e) {
+
+    const newItem = formInput.value;
+    
     //Check if edit mode is on
     if (isEditMode) {
         const itemToEdit = itemList.querySelector('[editing]');
@@ -30,9 +33,14 @@ function onAddItemSubmit (e) {
         addBtn.style.backgroundColor = "#58B7B3";
         addBtn.style.border = "none";
 
+    } else {
+        console.log(checkIfItemExists(newItem))
+        if (checkIfItemExists(newItem)) {
+            alert('That item already exists!');
+            return;
+        }
     }
 
-    const newItem = formInput.value;
     e.preventDefault();
 
     //Validate Input
@@ -165,6 +173,13 @@ function onClickItem(e) {
         setItemToEdit(e.target.parentElement.parentElement);
     };
 };
+
+// check if item exists
+
+function checkIfItemExists(item) {
+    const itemsFromStorage = getItemsFromStorage();
+    return itemsFromStorage.includes(item);
+}
 
 // Set item to edit
 function setItemToEdit(item) {
